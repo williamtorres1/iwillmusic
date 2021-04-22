@@ -5,12 +5,18 @@ const start = async () => {
 
   await TrackPlayer.add({
     id: '1',
-    url: 'https://ia800204.us.archive.org/11/items/hamlet_0911_librivox/hamlet_act1_shakespeare.mp3',
+    url:
+      'https://ia800204.us.archive.org/11/items/hamlet_0911_librivox/hamlet_act1_shakespeare.mp3',
     title: 'Artist title',
     artist: 'William Shakespeare',
-    artwork: 'http://www.archive.org/download/LibrivoxCdCoverArt8/hamlet_1104.jpg',
-  })
+    artwork:
+      'http://www.archive.org/download/LibrivoxCdCoverArt8/hamlet_1104.jpg',
+  });
   await TrackPlayer.play();
-}
+};
 
-export default start;
+const pause = async () => {
+  await TrackPlayer.pause();
+};
+
+export { start, pause };
