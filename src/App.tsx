@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
   StatusBar,
+  SafeAreaView,
+  PermissionsAndroid,
 } from 'react-native';
 
 import { start, pause } from './utils/player';
@@ -20,13 +21,30 @@ const App: React.FC = () => {
     setPlaying(false);
     return pause();
   }
+
+  useEffect(() => {
+    PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+    )
+      .then(response => {
+        console.log(response);
+      })
+      .catch(err => console.error(err));
+
+    PermissionsAndroid.check(
+      PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+    ).then(response => console.log(response));
+  }, []);
+
   return (
-    <View style={styles.container}>
+    <>
       <StatusBar backgroundColor="#191414" barStyle="light-content" />
-      <TouchableOpacity style={styles.button} onPress={playOrPause}>
-        <Text style={styles.buttonText}>Play/Pause</Text>
-      </TouchableOpacity>
-    </View>
+      <SafeAreaView style={styles.container}>
+        <TouchableOpacity style={styles.button} onPress={playOrPause}>
+          <Text style={styles.buttonText}>Play/Pause</Text>
+        </TouchableOpacity>
+      </SafeAreaView>
+    </>
   );
 };
 
