@@ -26,14 +26,13 @@ const App: React.FC = () => {
     PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
     )
-      .then(response => {
-        console.log(response);
-      })
+      .then(response => console.log(response))
       .catch(err => console.error(err));
-
     PermissionsAndroid.check(
       PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-    ).then(response => console.log(response));
+    )
+      .then(response => console.log(response))
+      .catch(err => console.error(err));
   }, []);
 
   return (
