@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   PermissionsAndroid,
 } from 'react-native';
+import RNFS from 'react-native-fs';
 
 import { start, pause } from './utils/player';
 
@@ -23,18 +24,19 @@ const App: React.FC = () => {
   }
 
   useEffect(() => {
-    PermissionsAndroid.request(
+    PermissionsAndroid.requestMultiple([
       PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-    )
+      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+    ])
       .then(response => console.log(response))
       .catch(err => console.error(err));
-    PermissionsAndroid.check(
-      PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-    )
+
+    console.log(RNFS.DownloadDirectoryPath);
+
+    RNFS.readFile('/storage/emulated/0/Download/artwork.jpg', 'UTF-8')
       .then(response => console.log(response))
       .catch(err => console.error(err));
   }, []);
-
   return (
     <>
       <StatusBar backgroundColor="#191414" barStyle="light-content" />
@@ -57,9 +59,15 @@ const styles = StyleSheet.create({
   },
   button: {
     marginHorizontal: 20,
+    width: '35%',
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#f0f9f0',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   buttonText: {
-    fontSize: 16,
+    fontSize: 18,
     color: '#ff880d',
     fontWeight: 'bold',
   },
